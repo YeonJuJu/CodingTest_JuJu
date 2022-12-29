@@ -36,7 +36,22 @@ public class TableHashFunction {
             System.out.println();
         }
 
+        int[] sArr = new int[data.length];
 
+        for(int i=row_begin ; i<=row_end; i++){
+            int total = 0;
+            int[] tmp = data[i];
+            for(int j=0;j< tmp.length; j++){
+                total += tmp[j]%(i+1);
+            }
+            sArr[i] = total;
+        }
+
+        for(int i=row_begin ; i<=row_end; i++){
+            System.out.println(sArr[i]);
+        }
+
+        //xor을 어떻게 하지 ?
 
         return answer;
     }
