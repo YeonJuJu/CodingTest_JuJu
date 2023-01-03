@@ -1,6 +1,8 @@
 package Lv2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class DivideNumberCards {
     public static void main(String[] args){
@@ -15,18 +17,68 @@ public class DivideNumberCards {
         // 1. 철수가 가진 카드들에 적힌 모든 숫자를 나눌 수 있고 영희가 가진 카드들에 적힌 모든 숫자들 중 하나도 나눌 수 없는 양의 정수 a
         // 2. 영희가 가진 카드들에 적힌 모든 숫자를 나눌 수 있고, 철수가 가진 카드들에 적힌 모든 숫자들 중 하나도 나눌 수 없는 양의 정수 a
 
-        // 1. arrayA - 공약수 와 arrayB - 공약수 구하셈
-
+        Arrays.sort(arrayA);
         ArrayList<Integer> arrayCommonDivisorA = new ArrayList<>();
 
+        for(int i=arrayA[0] ; i>1 ; i--){
+            boolean check = true;
+            for(int j=0 ; j<arrayA.length ; j++){
+                if(arrayA[j]%i != 0){
+                    check = false;
+                    break;
+                }
+            }
+            if(check)
+                arrayCommonDivisorA.add(i);
+        }
 
-        int[] arrayCommonDivisorB = new int[5];
+        Arrays.sort(arrayB);
+        ArrayList<Integer> arrayCommonDivisorB = new ArrayList<>();
 
-        // 2. arrayA 내림차순으로 정렬
+        for(int i=arrayB[0] ; i>1 ; i--){
+            boolean check = true;
+            for(int j=0 ; j<arrayB.length ; j++){
+                if(arrayB[j]%i != 0){
+                    check = false;
+                    break;
+                }
+            }
+            if(check)
+                arrayCommonDivisorB.add(i);
+        }
 
-        // 3. 하나씩 보면서 영희꺼에 없는거 찾아
+        Integer[] arrr1 = arrayCommonDivisorA.toArray(new Integer[0]);
+        Integer[] arrr2 = arrayCommonDivisorB.toArray(new Integer[0]);
 
-        // 반대경우도 생각
+        Arrays.sort(arrr1, Collections.reverseOrder());
+        Arrays.sort(arrr2, Collections.reverseOrder());
+
+        for(int i=0 ; i<arrr1.length ; i++){
+            boolean hey = true;
+            for(int j=0 ; j<arrayB.length ; j++){
+                if(arrayB[j]%arrr1[i] == 0){
+                    hey = false;
+                    break;
+                }
+            }
+            if(hey && answer<arrr1[i]){
+                answer = arrr1[i];
+                break;
+            }
+        }
+
+        for(int i=0 ; i<arrr2.length ; i++){
+            boolean hey = true;
+            for(int j=0 ; j<arrayA.length ; j++){
+                if(arrayA[j]%arrr2[i] == 0){
+                    hey = false;
+                }
+            }
+            if(hey && answer<arrr2[i]){
+                answer = arrr2[i];
+                break;
+            }
+        }
 
         return answer;
     }
