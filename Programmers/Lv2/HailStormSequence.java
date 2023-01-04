@@ -8,6 +8,7 @@ public class HailStormSequence {
 
     public static void main(String[] args){
         System.out.println(Arrays.toString(solution(5, new int[][] {{0,0}, {0,-1}, {2,-3}, {3,-3}})));
+        System.out.println(Arrays.toString(solution(6, new int[][] {{0,0}, {0,-1}, {2,-3}, {3,-3}})));
     }
     public static double[] solution(int k, int[][] ranges) {
         double[] answer = new double[ranges.length];
@@ -17,10 +18,10 @@ public class HailStormSequence {
         //System.out.println(Arrays.toString(hsSeq));
 
         // 2. 각 우박수열에 대한 좌표 구하기
-        int[][] hsSeqXY = new int[hsSeq.length][2];
+        double[][] hsSeqXY = new double[hsSeq.length][2];
         for(int i=0 ; i< hsSeqXY.length ; i++){
-            hsSeqXY[i][0] = i;
-            hsSeqXY[i][1] = hsSeq[i];
+            hsSeqXY[i][0] = (double) i;
+            hsSeqXY[i][1] = (double) hsSeq[i];
             //System.out.println("(" + i + "," + hsSeq[i] + ")");
         }
 
@@ -35,7 +36,7 @@ public class HailStormSequence {
         //area[0] = total;
         area[0] = 0;
 
-        System.out.println(Arrays.toString(area));
+        //System.out.println(Arrays.toString(area));
 
         // 4. 각 범위에 대한.. 정적분.. ranges int[][\] // {0,0}, {0,-1}, {2,-3}, {3,-3}}
 
@@ -43,7 +44,7 @@ public class HailStormSequence {
             int a = ranges[idx][0];
             int b = (ranges.length + ranges[idx][1]);
 
-            System.out.println("a : " + a + ", b : " + b);
+            //System.out.println("a : " + a + ", b : " + b);
             //System.out.println("b : " + (ranges.length + b));
 
             if(a == b)
@@ -52,7 +53,7 @@ public class HailStormSequence {
                 answer[idx] = -1;
             else{
                 for(int i=a ; i<=b; i++)
-                    answer[idx] += area[i+1];
+                    answer[idx] += (double) area[i+1];
             }
         }
 
