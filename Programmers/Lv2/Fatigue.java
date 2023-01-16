@@ -1,52 +1,31 @@
 package Lv2;
 
-import java.util.Arrays;
-import java.util.Comparator;
+// 완전탐색을 이용하여 문제를 풀어야 함~.....
 
 public class Fatigue {
-    public static void main(String[] args) {
-        System.out.println(solution(80, new int[][] {{80, 20}, {50, 40}, {30, 10}})); //3
-        //System.out.println(solution(80, new int[][] {{80, 20}, {80, 40}, {30, 10}})); //3
+    boolean[] visited;
+    int[][] dungeons;
+    int max = 0;
+
+    public int solution(int k, int[][] dungeons) {
+
+        this.dungeons = dungeons;
+        visited = new boolean[dungeons.length];
+        for (int i = 0; i < dungeons.length; i++) {
+            if (k >= dungeons[i][0])
+                dfs(i, k, 1);
+        }
+
+        return max;
     }
 
-    // 완전 탐색 이진트리로 풀어야할듯..!!!!!!!!
-    public static int solution(int k, int[][] dungeons) {
-        int answer = 0;
-
-        for (int i = 0; i < dungeons.length; i++) {
-            System.out.print("{" + dungeons[i][0] + ", " + dungeons[i][1] + "} ");
-        }
-        System.out.println();
-
-        Arrays.sort(dungeons, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[0] == o2[0])
-                    return o1[1] - o2[1];
-
-                return o2[0] - o1[0];
-            }
-        });
-
-        for (int i = 0; i < dungeons.length; i++) {
-            System.out.print("{" + dungeons[i][0] + ", " + dungeons[i][1] + "} ");
-        }
-        System.out.println();
-
-        int idx = 0;
-        while (k >= 0 && idx < dungeons.length) {
-
-            System.out.println("k :" + k + ", dungeons[" + idx + "][0] : " + dungeons[idx][0] + " dungeons[" + idx + "][1] : " + dungeons[idx][1]);
-
-            if (k >= dungeons[idx][0]) {
-                System.out.print("in if ~~~");
-                k -= dungeons[idx][1];
-                answer++;
-                System.out.println(answer);
-            }
-            idx++;
-        }
-
-        return answer;
+    private void dfs(int cur, int tired, int depth) {
+        visited[cur] = true;
+        tired -= dungeons[cur][1];
+        for (int i = 0; i < dungeons.length; i++)
+            if (!visited[i] && dungeons[i][0] <= tired)
+                dfs(i, tired, depth + 1);
+        max = Math.max(max, depth);
+        visited[cur] = false;
     }
 }
